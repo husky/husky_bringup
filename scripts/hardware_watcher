@@ -1,0 +1,58 @@
+#!/usr/bin/env python
+
+import rospy
+import capabilities.client
+import os.path
+
+
+class HardwareWatcher(object):
+    def __init__(self):
+        frequency = rospy.get_param("~frequency", 1.0)
+        self.client = capabilities.client.CapabilitiesClient()
+        self.client.establish_bond(timeout=1.0)
+
+        self.devices = [
+                UM6(),
+                NMEANavSat(),
+                ]
+        rospy.Timer(rospy.Duration(1.0 / frequency), self.watch)
+
+    def watch(self, event):
+        for device in self.devices:
+            device.watch(self.client)
+
+
+class Device(object):
+    capability = (None, None)
+
+    def __init__(self):
+        self.in_use = False;
+
+    def watch(self, client):
+        interface, provider = self.capability
+        if self.is_present() and not self.in_use:
+            if client.use_capability(interface, provider, timeout=5.0):
+                self.in_use = True
+        elif not self.is_present() and self.in_use:
+            if client.free_capability(interface, timeout=5.0):
+                self.in_use = False
+
+
+class UM6(Device):
+    capability = ('husky_bringup/IMU', 'husky_bringup/um6')
+
+    def is_present(self):
+        return os.path.exists('/dev/clearpath/imu')
+
+
+class NMEANavSat(Device):
+    capability = ('husky_bringup/NavSat', 'husky_bringup/nmea_navsat')
+
+    def is_present(self):
+        return os.path.exists('/dev/clearpath/gps')
+
+
+if __name__ == "__main__":
+    rospy.init_node('husky_hardware_watcher')
+    HardwareWatcher()
+    rospy.spin()

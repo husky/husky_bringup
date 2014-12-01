@@ -1,0 +1,25 @@
+<launch>
+  <arg name="port" default="$(optenv HUSKY_PORT /dev/prolific)" />
+
+  <!-- <node pkg="clearpath_base" type="kinematic_node" name="husky_kinematic" ns="husky">
+    <param name="port" value="$(arg port)" />
+    <rosparam>    
+      cmd_fill: True
+      data:
+        system_status: 10
+        safety_status: 10
+        encoders: 10
+        differential_speed: 10
+        differential_output: 10
+        power_status: 1
+    </rosparam>
+  </node>
+
+  <node pkg="diagnostic_aggregator" type="aggregator_node" name="diagnostic_aggregator">
+    <rosparam command="load" file="$(find husky_base)/config/diagnostics.yaml"/>
+  </node>  -->
+
+  <!-- Capabilities and hardware watcher, which will launch drivers for detected devices. -->
+  <node pkg="capabilities" type="capability_server" name="capability_server" />
+  <node pkg="husky_bringup" type="hardware_watcher" name="husky_hardware_watcher" />
+</launch>

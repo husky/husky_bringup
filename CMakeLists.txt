@@ -11,9 +11,9 @@ catkin_package()
 #roslaunch_add_file_check(launch/imu_config)
 #roslaunch_add_file_check(launch/navsat_config)
 
-install(PROGRAMS scripts/install
+install(PROGRAMS scripts/install scripts/hardware_watcher
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
-install(DIRECTORY launch udev config
+install(DIRECTORY launch udev config interfaces providers
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
 

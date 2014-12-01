@@ -1,0 +1,14 @@
+%YAML 1.1
+---
+name: NavSat
+spec_version: 1
+spec_type: interface
+interface:
+  topics:
+    provides:
+      'navsat/fix':
+        type: 'sensor_msgs/NavSatFix'
+      'navsat/vel':
+        type: 'geometry_msgs/TwistStamped'
+      'navsat/sentence':
+        type: 'nmea_msgs/Sentence'

@@ -1,0 +1,7 @@
+%YAML 1.1
+---
+name: microstrain
+spec_version: 1
+spec_type: provider
+implements: 'husky_bringup/IMU'
+launch_file: 'microstrain.launch'

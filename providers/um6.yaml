@@ -1,0 +1,7 @@
+%YAML 1.1
+---
+name: um6
+spec_version: 1
+spec_type: provider
+implements: 'husky_bringup/IMU'
+launch_file: 'um6.launch'

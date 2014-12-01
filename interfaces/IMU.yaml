@@ -1,0 +1,12 @@
+%YAML 1.1
+---
+name: IMU
+spec_version: 1
+spec_type: interface
+interface:
+  topics:
+    provides:
+      'imu/data':
+        type: 'sensor_msgs/IMU'
+      'imu/mag':
+        type: 'geometry_msgs/Vector3Stamped'

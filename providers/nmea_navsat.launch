@@ -1,0 +1,9 @@
+<launch>
+  <group ns="navsat">
+    <node pkg="nmea_comms" type="serial_node" name="nmea_serial_node" output="screen">
+      <param name="port" value="$(optenv HUSKY_NAVSAT_PORT /dev/clearpath/gps)" />
+      <param name="baud" value="$(optenv HUSKY_NAVSAT_BAUD 19200)" />
+    </node>
+    <node pkg="nmea_navsat_driver" type="nmea_topic_driver" name="nmea_topic_driver" />
+  </group>
+</launch>
